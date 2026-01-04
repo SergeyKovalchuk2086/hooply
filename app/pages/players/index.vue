@@ -1,0 +1,1 @@
+<template>PLAYERS PAGE</template>
