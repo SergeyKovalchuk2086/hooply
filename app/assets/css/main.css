@@ -1,3 +1,12 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+    background-color: black;
+    color: white;
+    padding: 0 16px;
 }
