@@ -14,27 +14,120 @@ export type Database = {
   }
   public: {
     Tables: {
+      game_players: {
+        Row: {
+          fouls: number
+          free_throw_made: number
+          game_id: string
+          id: string
+          player_id: string
+          three_pt_made: number
+          two_pt_made: number
+        }
+        Insert: {
+          fouls: number
+          free_throw_made: number
+          game_id: string
+          id?: string
+          player_id: string
+          three_pt_made: number
+          two_pt_made: number
+        }
+        Update: {
+          fouls?: number
+          free_throw_made?: number
+          game_id?: string
+          id?: string
+          player_id?: string
+          three_pt_made?: number
+          two_pt_made?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "game_players_game_id_fkey"
+            columns: ["game_id"]
+            isOneToOne: false
+            referencedRelation: "games"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "game_players_player_id_fkey1"
+            columns: ["player_id"]
+            isOneToOne: false
+            referencedRelation: "players"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      games: {
+        Row: {
+          away_team: string | null
+          date: string
+          home_team: string | null
+          id: string
+        }
+        Insert: {
+          away_team?: string | null
+          date: string
+          home_team?: string | null
+          id?: string
+        }
+        Update: {
+          away_team?: string | null
+          date?: string
+          home_team?: string | null
+          id?: string
+        }
+        Relationships: []
+      }
       players: {
         Row: {
+          birthdate: string
+          height: number | null
           id: string
           name: string
           number: number | null
+          team_id: string | null
         }
         Insert: {
+          birthdate: string
+          height?: number | null
           id: string
           name: string
           number?: number | null
+          team_id?: string | null
         }
         Update: {
+          birthdate?: string
+          height?: number | null
           id?: string
           name?: string
           number?: number | null
+          team_id?: string | null
         }
         Relationships: []
       }
     }
     Views: {
-      [_ in never]: never
+      player_stats_total: {
+        Row: {
+          fouls: number | null
+          free_throw: number | null
+          games_played: number | null
+          player_id: string | null
+          three_pt: number | null
+          two_pt: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "game_players_player_id_fkey1"
+            columns: ["player_id"]
+            isOneToOne: false
+            referencedRelation: "players"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       [_ in never]: never

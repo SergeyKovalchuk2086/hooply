@@ -10,7 +10,7 @@ export const usePlayers = async () => {
     .select('*')
 
   return {
-    players: data as Player[] | null,
+    players: data as Player[],
     error
   }
 }

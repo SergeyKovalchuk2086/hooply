@@ -1,20 +1,24 @@
 <template>
-  <NuxtLink class="player-card" to="/players/1">
+  <NuxtLink class="player-card" :to="`/players/${player.id}`">
     <div class="player-card__avatar">
       <img src="/user-image.svg" alt="Player avatar" />
     </div>
 
     <div class="player-card__info">
-      <span class="player-card__name">{{ name }}</span>
-      <span class="player-card__number">{{ number }}</span>
+      <span class="player-card__name">{{ player.name }}</span>
+      <span class="player-card__number">{{ player.number }}</span>
     </div>
   </NuxtLink>
 </template>
 
 <script setup lang="ts">
 defineProps<{
-  name: string;
-  number: number;
+  player: {
+    id: string;
+    name: string;
+    number: number | null;
+    team_id: string | null;
+  };
 }>();
 </script>
 
