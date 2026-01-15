@@ -13,5 +13,8 @@ export default defineNuxtConfig({
 
   supabase: {
     redirect: false // важно, чтобы не мешал роутам
+  },
+  devtools: {
+    enabled: false
   }
 })
