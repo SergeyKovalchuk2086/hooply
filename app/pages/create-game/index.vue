@@ -16,7 +16,7 @@
           </div>
         </div>
 
-        <button class="btn" @click="openSheet('black')">+ Добавить</button>
+        <button class="btn" @click="openSheet('black')">Добавить</button>
       </section>
 
       <section class="team">
@@ -32,7 +32,7 @@
           </div>
         </div>
 
-        <button class="btn" @click="openSheet('white')">+ Добавить</button>
+        <button class="btn" @click="openSheet('white')">Добавить</button>
       </section>
     </div>
 
@@ -145,7 +145,7 @@ const onConfirmPick = (payload: { team: Team; selectedIds: string[] }) => {
 
 .teams {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 12px;
 }
 
@@ -153,6 +153,9 @@ const onConfirmPick = (payload: { team: Team; selectedIds: string[] }) => {
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 12px;
   padding: 12px;
+
+  display: flex;
+  flex-direction: column;
 }
 
 .team__title {
@@ -166,7 +169,6 @@ const onConfirmPick = (payload: { team: Team; selectedIds: string[] }) => {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  min-height: 120px;
   margin-bottom: 10px;
 }
 
@@ -183,6 +185,8 @@ const onConfirmPick = (payload: { team: Team; selectedIds: string[] }) => {
 .chip__avatar {
   width: 28px;
   height: 28px;
+  min-width: 28px;
+  min-height: 28px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.25);
 }
@@ -210,6 +214,7 @@ const onConfirmPick = (payload: { team: Team; selectedIds: string[] }) => {
   background: transparent;
   color: inherit;
   cursor: pointer;
+  margin-top: auto;
 }
 
 @media (max-width: 420px) {
