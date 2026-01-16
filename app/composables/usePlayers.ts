@@ -1,6 +1,6 @@
 import type { Database } from '~/types/database.types'
+import type { Player } from '~/types/player'
 
-type Player = Database['public']['Tables']['players']['Row']
 
 export const usePlayers = async () => {
   const supabase = useSupabaseClient<Database>()

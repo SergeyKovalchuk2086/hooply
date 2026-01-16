@@ -49,26 +49,11 @@
 
 <script setup lang="ts">
 import PlayerPickerSheet from "~/components/players/PlayerPickerSheet.vue";
+import type { Player } from "~/types/player";
 
 type Team = "black" | "white";
 
-type Player = {
-  id: string;
-  name: string;
-  number: number;
-  avatar_url?: string | null;
-};
-
-// TODO : заменить на игроков с supabase
-const players = ref<Player[]>([
-  { id: "p1", name: "Ковальчук С.", number: 3 },
-  { id: "p2", name: "Иванов С.", number: 9 },
-  { id: "p3", name: "Петров С.", number: 12 },
-  { id: "p4", name: "Тугодум С.", number: 7 },
-  { id: "p5", name: "Серун С.", number: 5 },
-  { id: "p6", name: "Ворчун С.", number: 11 },
-  { id: "p7", name: "Лопаткин С.", number: 1 },
-]);
+const { players } = await usePlayers();
 
 const blackIds = ref<string[]>([]);
 const whiteIds = ref<string[]>([]);
@@ -78,24 +63,22 @@ const TEAM_LIMIT = 5;
 const blackSlotsLeft = computed(() => TEAM_LIMIT - blackIds.value.length);
 const whiteSlotsLeft = computed(() => TEAM_LIMIT - whiteIds.value.length);
 
-const blackPlayers = computed(
-  () =>
-    blackIds.value
-      .map((id) => players.value.find((p) => p.id === id))
-      .filter(Boolean) as Player[]
+const blackPlayers = computed(() =>
+  blackIds.value
+    .map((id) => unref(players).find((p) => p.id === id))
+    .filter((p): p is Player => p !== undefined)
 );
 
-const whitePlayers = computed(
-  () =>
-    whiteIds.value
-      .map((id) => players.value.find((p) => p.id === id))
-      .filter(Boolean) as Player[]
+const whitePlayers = computed(() =>
+  whiteIds.value
+    .map((id) => unref(players).find((p) => p.id === id))
+    .filter((p): p is Player => p !== undefined)
 );
 
 // Игроки, которые ещё не добавлены никуда
 const availablePlayers = computed(() => {
   const picked = new Set([...blackIds.value, ...whiteIds.value]);
-  return players.value.filter((p) => !picked.has(p.id));
+  return unref(players).filter((p) => !picked.has(p.id));
 });
 
 const removeFromBlack = (id: string) => {

@@ -42,8 +42,9 @@
 </template>
 
 <script setup lang="ts">
+import type { Player } from "~/types/player";
+
 type Team = "black" | "white";
-type Player = { id: string; name: string; number: number };
 
 const props = defineProps<{
   open: boolean;
