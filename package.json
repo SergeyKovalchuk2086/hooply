@@ -8,7 +8,8 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "supabase:types": "npx supabase gen types typescript --project-id fetmgxqottyewztkpehu > app/types/database.types.ts"
   },
   "dependencies": {
     "@nuxtjs/supabase": "^2.0.3",

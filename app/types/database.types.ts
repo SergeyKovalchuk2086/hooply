@@ -16,31 +16,31 @@ export type Database = {
     Tables: {
       game_players: {
         Row: {
-          fouls: number
-          free_throw_made: number
+          fouls: number | null
+          free_throw_made: number | null
           game_id: string
           id: string
           player_id: string
-          three_pt_made: number
-          two_pt_made: number
+          three_pt_made: number | null
+          two_pt_made: number | null
         }
         Insert: {
-          fouls: number
-          free_throw_made: number
+          fouls?: number | null
+          free_throw_made?: number | null
           game_id: string
           id?: string
           player_id: string
-          three_pt_made: number
-          two_pt_made: number
+          three_pt_made?: number | null
+          two_pt_made?: number | null
         }
         Update: {
-          fouls?: number
-          free_throw_made?: number
+          fouls?: number | null
+          free_throw_made?: number | null
           game_id?: string
           id?: string
           player_id?: string
-          three_pt_made?: number
-          two_pt_made?: number
+          three_pt_made?: number | null
+          two_pt_made?: number | null
         }
         Relationships: [
           {
@@ -130,7 +130,16 @@ export type Database = {
       }
     }
     Functions: {
-      [_ in never]: never
+      create_game_with_players: {
+        Args: {
+          p_away_team: string
+          p_black_players: string[]
+          p_date?: string
+          p_home_team: string
+          p_white_players: string[]
+        }
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never

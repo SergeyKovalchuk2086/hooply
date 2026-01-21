@@ -2,10 +2,20 @@
   <div class="page">
     <h1 class="title">Состав на игру</h1>
 
+    <div class="team-names">
+      <label class="field">
+        <span class="field__label">Команда 1</span>
+        <input v-model.trim="homeTeam" class="input" placeholder="Чёрные" />
+      </label>
+
+      <label class="field">
+        <span class="field__label">Команда 2</span>
+        <input v-model.trim="awayTeam" class="input" placeholder="Белые" />
+      </label>
+    </div>
+
     <div class="teams">
       <section class="team">
-        <h2 class="team__title">Чёрные</h2>
-
         <div class="team__list">
           <div v-for="p in blackPlayers" :key="p.id" class="chip">
             <span class="chip__avatar" />
@@ -20,8 +30,6 @@
       </section>
 
       <section class="team">
-        <h2 class="team__title">Белые</h2>
-
         <div class="team__list">
           <div v-for="p in whitePlayers" :key="p.id" class="chip">
             <span class="chip__avatar" />
@@ -44,6 +52,8 @@
       :initial-selected-ids="sheetInitialSelectedIds"
       @confirm="onConfirmPick"
     />
+
+    <button class="btn create-btn" @click="onCreateGame">Создать игру</button>
   </div>
 </template>
 
@@ -54,6 +64,9 @@ import type { Player } from "~/types/player";
 type Team = "black" | "white";
 
 const { players } = await usePlayers();
+
+const homeTeam = ref("Чёрные");
+const awayTeam = ref("Белые");
 
 const blackIds = ref<string[]>([]);
 const whiteIds = ref<string[]>([]);
@@ -117,6 +130,18 @@ const onConfirmPick = (payload: { team: Team; selectedIds: string[] }) => {
     whiteIds.value = [...whiteIds.value, ...selectedIds.slice(0, slots)];
   }
 };
+const { createGame } = useCreateGame();
+
+const onCreateGame = async () => {
+  const { gameId } = await createGame({
+    blackIds: blackIds.value,
+    whiteIds: whiteIds.value,
+    homeTeam: homeTeam.value,
+    awayTeam: awayTeam.value,
+  });
+
+  navigateTo(`/games/${gameId}`);
+};
 </script>
 
 <style scoped>
@@ -152,7 +177,6 @@ const onConfirmPick = (payload: { team: Team; selectedIds: string[] }) => {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-bottom: 10px;
 }
 
 .chip {
@@ -200,8 +224,47 @@ const onConfirmPick = (payload: { team: Team; selectedIds: string[] }) => {
   margin-top: auto;
 }
 
+.create-btn {
+  margin-top: 16px;
+  background: #2da42d;
+}
+
 @media (max-width: 420px) {
   .teams {
+    grid-template-columns: 1fr;
+  }
+}
+
+.team-names {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 14px 0 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field__label {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.input {
+  height: 40px;
+  border-radius: 10px;
+  padding: 0 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  outline: none;
+}
+
+@media (max-width: 420px) {
+  .team-names {
     grid-template-columns: 1fr;
   }
 }

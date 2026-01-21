@@ -29,6 +29,7 @@ export const usePlayer = async (id: string) => {
   `)
   .eq('id', id)
   .single()
+  
 
   if (!data) {
     return ;
@@ -41,29 +42,5 @@ export const usePlayer = async (id: string) => {
     playerTotalStats: player_stats_total[0],
     age: getAge(data.birthdate),
     birthdate: new Date(data.birthdate).toLocaleDateString('ru-RU')
-  }
-  
-
-// const { data, error } = await supabase
-//   .from('players')
-//   .select(`
-//     id,
-//     name,
-//     number,
-//     age,
-//     height,
-//     birthdate,
-//     game_players (
-//       two_pt_made,
-//       three_pt_made,
-//       free_throw_made,
-//       fouls,
-//       games (
-//         id,
-//         date
-//       )
-//     )
-//   `)
-//   .eq('id', id)
-//   .single();  
+  } 
 };

@@ -132,7 +132,7 @@ const confirm = () => {
   background: rgba(0, 0, 0, 0.55);
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   padding: 12px;
   z-index: 50;
 }
@@ -143,7 +143,7 @@ const confirm = () => {
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 16px;
   overflow: hidden;
-  max-height: 82vh;
+  max-height: 80vh;
   display: flex;
   flex-direction: column;
 }
